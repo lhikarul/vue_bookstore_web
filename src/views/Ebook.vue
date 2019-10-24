@@ -14,6 +14,8 @@
 
         <menu-bar   :ifTitleAndMenuShow="ifTitleAndMenuShow"
                     :fontSizeList="fontSizeList"
+                    :defaultFontSize="defaultFontSize"
+                    @setFontSize="setFontSize"
                     ref="menuBar">
         </menu-bar>
 
@@ -44,10 +46,18 @@ export default {
                 {fontSize: 20},
                 {fontSize: 22},
                 {fontSize: 24},
-            ]
+            ],
+            defaultFontSize: 16
         }
     },
     methods: {
+        setFontSize (fontSize) {
+            this.defaultFontSize = fontSize;
+            if (this.themes) {
+                console.log(fontSize)
+                this.themes.fontSize(fontSize + 'px');
+            }
+        },
         showEpub () {
             // 生成 book
             this.book = new Epub(DOWNLOAD_URL);
@@ -60,6 +70,12 @@ export default {
 
             // 渲染電子書
             this.rendition.display();
+
+            // get theme 物件
+            this.themes = this.rendition.themes;
+
+            // 默認 fontsize
+            this.setFontSize(this.defaultFontSize);
         },
         toggleTitleAndMenu () {
 
