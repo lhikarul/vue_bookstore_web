@@ -1,26 +1,7 @@
 <template>
     <div class="ebook">
 
-        <transition name="slide-down">
-
-            <div class="title-wrapper" v-show="ifTitleAndMenuShow">
-                <div class="left">
-                    <span class="icon-back icon"></span>
-                </div>
-                <div class="right">
-                    <div class="icon-wrapper">
-                        <span class="icon-cart icon"></span>
-                    </div>
-                    <div class="icon-wrapper">
-                        <span class="icon-person icon"></span>
-                    </div>
-                    <div class="icon-wrapper">
-                        <span class="icon-more icon"></span>
-                    </div>
-                </div>
-            </div>
-
-        </transition>
+        <title-bar :ifTitleAndMenuShow="ifTitleAndMenuShow"></title-bar>
 
         <div class="read-wrapper">
             <div id="read"></div>
@@ -31,29 +12,7 @@
             </div>
         </div>
 
-        <transition name="slide-up">
-
-            <div class="menu-wrapper" v-show="ifTitleAndMenuShow">
-
-                <div class="icon-wrapper">
-                    <span class="icon-menu icon"></span>
-                </div>
-
-                <div class="icon-wrapper">
-                    <span class="icon-progress icon"></span>
-                </div>
-
-                <div class="icon-wrapper">
-                    <span class="icon-bright icon"></span>
-                </div>
-
-                <div class="icon-wrapper">
-                    <span class="icon-a icon">A</span>
-                </div>
-
-            </div>
-
-        </transition>
+        <menu-bar :ifTitleAndMenuShow="ifTitleAndMenuShow" ref="menuBar"></menu-bar>
 
     </div>
 </template>
@@ -61,10 +20,16 @@
 <script>
 import Epub from 'epubjs';
 
+import TitleBar from 'components/TitleBar';
+import MenuBar from 'components/MenuBar';
+
 const DOWNLOAD_URL = '/2018_Book_AgileProcessesInSoftwareEngine.epub';
 
 export default {
     name: 'Ebook',
+    components: {
+        TitleBar,MenuBar
+    },
     data () {
         return {
             ifTitleAndMenuShow: false
@@ -86,6 +51,10 @@ export default {
         },
         toggleTitleAndMenu () {
             this.ifTitleAndMenuShow = !this.ifTitleAndMenuShow;
+
+            if (!this.ifTitleAndMenuShow) {
+                this.$refs.menuBar.hideSetting();
+            }
         },
         prevPage () {
             if (this.rendition) {
@@ -111,38 +80,6 @@ export default {
     .ebook {
         position: relative;
 
-        .title-wrapper {
-            display: flex;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 101;
-            width: 100%;
-            height: px2rem(48);
-            background: white;
-            box-shadow: 0 px2rem(8) px2rem(8) rgba(0,0,0,.15);
-
-            .left {
-                flex: 0 0 px2rem(60);
-                @include center;
-            }
-
-            .right {
-                flex: 1;
-                display: flex;
-                justify-content: flex-end;
-
-                .icon-wrapper {
-                    flex: 0 0 px2rem(40);
-                    @include center;
-
-                    .icon-cart {
-                        font-size: px2rem(22);
-                    }
-                }
-            }
-        }
-
         .read-wrapper {
             .mask {
                 display: flex;
@@ -163,31 +100,6 @@ export default {
 
                 .right {
                     flex: 0 0 px2rem(100);
-                }
-            }
-        }
-
-        .menu-wrapper {
-            display: flex;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            z-index: 101;
-            width: 100%;
-            height: px2rem(48);
-            background: white;
-            box-shadow: 0 px2rem(-8) px2rem(8) rgba(0,0,0,.15);
-
-            .icon-wrapper {
-                flex: 1;
-                @include center;
-
-                .icon-progress {
-                    font-size: px2rem(28);
-                }
-
-                .icon-bright {
-                    font-size: px2rem(24);
                 }
             }
         }
