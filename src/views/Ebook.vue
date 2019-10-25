@@ -17,8 +17,10 @@
                     :defaultFontSize="defaultFontSize"
                     :themeList="themeList"
                     :defaultTheme="defalutTheme"
+                    :bookAvailable="bookAvailable"
                     @setFontSize="setFontSize"
                     @setTheme="setTheme"
+                    @onProgressChange="onProgressChange"
                     ref="menuBar">
         </menu-bar>
 
@@ -85,10 +87,17 @@ export default {
                     }
                 }
             ],
-            defalutTheme: 0
+            defalutTheme: 0,
+            bookAvailable: false
         }
     },
     methods: {
+        onProgressChange (progress) {
+            // progress 進度條的數值 0 ~ 100
+            const percentage = progress / 100;
+            const location = percentage > 0 ? this.locations.cfiFromPercentage(percentage) : 0;
+            this.rendition.display(location);
+        },
         registerTheme () {
             this.themeList.forEach(theme => {
                 this.themes.register(theme.name,theme.style)
@@ -127,6 +136,16 @@ export default {
             // this.themes.select(name)
             this.registerTheme()
             this.setTheme(this.defalutTheme);
+
+
+            // 獲取 location object
+            // 通過 epubjs 的鉤子函數實現
+            this.book.ready.then(() => {
+                return this.book.locations.generate()
+            }).then(result => {
+                this.locations = this.book.locations;
+                this.bookAvailable = true;
+            })
         },
         toggleTitleAndMenu () {
 

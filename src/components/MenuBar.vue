@@ -9,7 +9,7 @@
                 </div>
 
                 <div class="icon-wrapper">
-                    <span class="icon-progress icon"></span>
+                    <span class="icon-progress icon" @click="showSetting(2)"></span>
                 </div>
 
                 <div class="icon-wrapper">
@@ -54,6 +54,21 @@
                         <div class="text" :class="{'selected': index === defaultTheme}">{{item.name}}</div>
                     </div>
                 </div>
+
+                <div class="setting-progress" v-else-if="showTag === 2">
+                    <div class="progress-wrapper">
+                        <input class="progress" type="range" max="100" min="0" step="1"
+                            @change="onProgressChange($event.target.value)"
+                            @input="onProgressInput($event.target.value)"
+                            :value="progress"
+                            :disabled="!bookAvailable"
+                            ref="progress"
+                        >
+                    </div>
+                    <div class="text-wrapper">
+                        <span>{{bookAvailable ? progress + '%' : '加載中...'}}</span>
+                    </div>
+                </div>
             </div>
         </transition>
     </div>
@@ -78,15 +93,28 @@ export default {
         },
         defaultTheme: {
             type: Number
+        },
+        bookAvailable: {
+            type: Boolean
         }
     },
     data () {
         return {
             ifSettingShow: false,
-            showTag: 0
+            showTag: 0,
+            progress: 0
         }
     },
     methods: {
+        // 拖動進度條時觸發事件
+        onProgressInput(progress) {
+            this.progress = progress;
+            this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`;
+        },
+        // 進度條鬆開後觸發事件，根據進度條數值跳轉到指定位置
+        onProgressChange (progress) {
+            this.$emit('onProgressChange', progress);  
+        },
         setFontSize (fontSize) {
             this.$emit('setFontSize', fontSize);
         },
@@ -245,6 +273,47 @@ export default {
                 }
             }
             
+        }
+
+        .setting-progress {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            .progress-wrapper {
+                width: 100%;
+                height: 100%;
+                @include center;
+                padding: 0 px2rem(30);
+                box-sizing: border-box;
+                .progress {
+                    width: 100%;
+                    -webkit-appearance: none;
+                    height: px2rem(2);
+                    background: linear-gradient(#999,#999) no-repeat, #ddd;
+                    background-size: 0 100%;
+                    &:focus {
+                        outline: none;
+                    }
+                    &::-webkit-slider-thumb {
+                        -webkit-appearance: none;
+                        height: px2rem(20);
+                        width: px2rem(20);
+                        border-radius: 50%;
+                        background: white;
+                        box-shadow: 0 4px 4px 0 rgba(0,0,0,.15);
+                        border: px2rem(1) solid #ddd;
+                    }
+                }
+            }
+            .text-wrapper {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                color: #333;
+                font-size: px2rem(12);
+                text-align: center;
+            }
         }
     }
 </style>
