@@ -58,6 +58,12 @@ export default {
         },
         defaultFontSize: {
             type: Number
+        },
+        themeList: {
+            type: Array
+        },
+        defaultTheme: {
+            type: Number
         }
     },
     data () {

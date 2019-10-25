@@ -15,7 +15,10 @@
         <menu-bar   :ifTitleAndMenuShow="ifTitleAndMenuShow"
                     :fontSizeList="fontSizeList"
                     :defaultFontSize="defaultFontSize"
+                    :themeList="themeList"
+                    :defaultTheme="defalutTheme"
                     @setFontSize="setFontSize"
+                    @setTheme="setTheme"
                     ref="menuBar">
         </menu-bar>
 
@@ -47,14 +50,57 @@ export default {
                 {fontSize: 22},
                 {fontSize: 24},
             ],
-            defaultFontSize: 16
+            defaultFontSize: 16,
+            themeList: [
+                {
+                    name: 'default',
+                    style: {
+                        body: {
+                            'color': '#000','background': '#fff'
+                        }
+                    }
+                },
+                {
+                    name: 'eye',
+                    style: {
+                        body: {
+                            'color': '#000','background': '#ceeaba'
+                        }
+                    }
+                },
+                {
+                    name: 'night',
+                    style: {
+                        body: {
+                            'color': '#fff','background': '#000'
+                        }
+                    }
+                },
+                {
+                    name: 'gold',
+                    style: {
+                        body: {
+                            'color': '#000','background': 'rgb(241,236,226)'
+                        }
+                    }
+                }
+            ],
+            defalutTheme: 0
         }
     },
     methods: {
+        registerTheme () {
+            this.themeList.forEach(theme => {
+                this.themes.register(theme.name,theme.style)
+            })
+        },
+        setTheme (index) {
+            this.themes.select(this.themeList[index].name);
+            this.defalutTheme = index;
+        },
         setFontSize (fontSize) {
             this.defaultFontSize = fontSize;
             if (this.themes) {
-                console.log(fontSize)
                 this.themes.fontSize(fontSize + 'px');
             }
         },
@@ -76,6 +122,11 @@ export default {
 
             // 默認 fontsize
             this.setFontSize(this.defaultFontSize);
+
+            // this.themes.register(name,styles)
+            // this.themes.select(name)
+            this.registerTheme()
+            this.setTheme(this.defalutTheme);
         },
         toggleTitleAndMenu () {
 
