@@ -35,7 +35,8 @@ import Epub from 'epubjs';
 import TitleBar from 'components/TitleBar';
 import MenuBar from 'components/MenuBar';
 
-const DOWNLOAD_URL = '/2018_Book_AgileProcessesInSoftwareEngine.epub';
+console.log(process.env.NODE_ENV)
+const DOWNLOAD_URL = process.env.NODE_ENV === 'development' ? '/2018_Book_AgileProcessesInSoftwareEngine.epub' : './2018_Book_AgileProcessesInSoftwareEngine.epub';
 
 export default {
     name: 'Ebook',

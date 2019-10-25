@@ -18,7 +18,3 @@ document.addEventListener('DOMContentLoaded', () => {
   html.style.fontSize = fontSize + 'px';
 })
 </script>
-
-<style lang="scss">
-
-</style>
