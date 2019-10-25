@@ -18,6 +18,8 @@
                     :themeList="themeList"
                     :defaultTheme="defalutTheme"
                     :bookAvailable="bookAvailable"
+                    :navigation="navigation"
+                    @jumpTo="jumTo"
                     @setFontSize="setFontSize"
                     @setTheme="setTheme"
                     @onProgressChange="onProgressChange"
@@ -88,10 +90,21 @@ export default {
                 }
             ],
             defalutTheme: 0,
-            bookAvailable: false
+            bookAvailable: false,
+            navigation: {}
         }
     },
     methods: {
+        hideTitleAndMuen () {
+            this.ifTitleAndMenuShow = false;
+            this.$refs.menuBar.hideSetting();
+            this.$refs.menuBar.hideContent();
+        },
+        // 根據連結跳轉至指定位置
+        jumTo (href) {
+            this.rendition.display(href);
+            this.hideTitleAndMuen();
+        },
         onProgressChange (progress) {
             // progress 進度條的數值 0 ~ 100
             const percentage = progress / 100;
@@ -141,6 +154,7 @@ export default {
             // 獲取 location object
             // 通過 epubjs 的鉤子函數實現
             this.book.ready.then(() => {
+                this.navigation = this.book.navigation;
                 return this.book.locations.generate()
             }).then(result => {
                 this.locations = this.book.locations;
