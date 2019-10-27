@@ -1,7 +1,9 @@
 <template>
     <div class="ebook">
 
-        <title-bar :ifTitleAndMenuShow="ifTitleAndMenuShow"></title-bar>
+        <ebook-reader></ebook-reader>
+
+        <!-- <title-bar :ifTitleAndMenuShow="ifTitleAndMenuShow"></title-bar> -->
 
         <div class="read-wrapper">
             <div id="read"></div>
@@ -12,7 +14,7 @@
             </div>
         </div>
 
-        <menu-bar   :ifTitleAndMenuShow="ifTitleAndMenuShow"
+        <!-- <menu-bar   :ifTitleAndMenuShow="ifTitleAndMenuShow"
                     :fontSizeList="fontSizeList"
                     :defaultFontSize="defaultFontSize"
                     :themeList="themeList"
@@ -24,7 +26,7 @@
                     @setTheme="setTheme"
                     @onProgressChange="onProgressChange"
                     ref="menuBar">
-        </menu-bar>
+        </menu-bar> -->
 
     </div>
 </template>
@@ -32,6 +34,7 @@
 <script>
 import Epub from 'epubjs';
 
+import EbookReader from 'components/ebook/EbookReader';
 import TitleBar from 'components/TitleBar';
 import MenuBar from 'components/MenuBar';
 
@@ -41,7 +44,9 @@ const DOWNLOAD_URL = process.env.NODE_ENV === 'development' ? '/2018_Book_AgileP
 export default {
     name: 'Ebook',
     components: {
-        TitleBar,MenuBar
+        TitleBar,
+        MenuBar,
+        EbookReader
     },
     data () {
         return {
@@ -182,7 +187,7 @@ export default {
         }
     },
     mounted () {
-        this.showEpub()
+        // this.showEpub()
     }
 
 }

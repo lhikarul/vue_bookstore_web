@@ -18,3 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
   html.style.fontSize = fontSize + 'px';
 })
 </script>
+
+<style lang="scss" scoped>
+  #app {
+    margin: 0 auto;
+    max-width: 375px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+</style>
