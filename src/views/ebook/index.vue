@@ -5,14 +5,14 @@
 
         <!-- <title-bar :ifTitleAndMenuShow="ifTitleAndMenuShow"></title-bar> -->
 
-        <div class="read-wrapper">
+        <!-- <div class="read-wrapper">
             <div id="read"></div>
             <div class="mask">
                 <div class="left" @click="prevPage"></div>
                 <div class="center" @click="toggleTitleAndMenu"></div>
                 <div class="right" @click="nextPage"></div>
             </div>
-        </div>
+        </div> -->
 
         <!-- <menu-bar   :ifTitleAndMenuShow="ifTitleAndMenuShow"
                     :fontSizeList="fontSizeList"
@@ -196,31 +196,31 @@ export default {
 <style lang="scss" scoped>
     @import 'assets/css/global';
 
-    .ebook {
-        position: relative;
+    // .ebook {
+    //     position: relative;
 
-        .read-wrapper {
-            .mask {
-                display: flex;
-                position: absolute;
-                top: 0;
-                left: 0;
-                z-index: 100;
-                width: 100%;
-                height: 100%;
+    //     .read-wrapper {
+    //         .mask {
+    //             display: flex;
+    //             position: absolute;
+    //             top: 0;
+    //             left: 0;
+    //             z-index: 100;
+    //             width: 100%;
+    //             height: 100%;
 
-                .left {
-                    flex: 0 0 px2rem(100);
-                }
+    //             .left {
+    //                 flex: 0 0 px2rem(100);
+    //             }
 
-                .center {
-                    flex: 1;
-                }
+    //             .center {
+    //                 flex: 1;
+    //             }
 
-                .right {
-                    flex: 0 0 px2rem(100);
-                }
-            }
-        }
-    }
+    //             .right {
+    //                 flex: 0 0 px2rem(100);
+    //             }
+    //         }
+    //     }
+    // }
 </style>
