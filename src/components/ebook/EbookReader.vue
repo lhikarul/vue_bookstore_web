@@ -25,6 +25,7 @@ export default {
             const url  = 'http://127.0.0.1:9001/epub/' + this.fileName + ".epub";
 
             this.book = new Epub(url);
+            this.setCurrentBook(this.book);
 
             this.rendition = this.book.renderTo('read',{
                 width: 375,

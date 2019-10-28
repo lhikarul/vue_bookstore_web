@@ -3,6 +3,7 @@ import {mapGetters,mapActions} from 'vuex';
 export const ebookMixin = {
     computed: {
         ...mapGetters([
+            'currentBook',
             'fileName',
             'menuVisible',
             'settingVisible',
@@ -11,6 +12,7 @@ export const ebookMixin = {
     },
     methods: {
         ...mapActions([
+            'setCurrentBook',
             'setMenuVisible',
             'setFileName',
             'setSettingVisible',
