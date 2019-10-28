@@ -26,7 +26,7 @@
 <script>
 import {ebookMixin} from 'utils/mixin';
 export default {
-    name: 'TitleBar',
+    name: 'EbookTitle',
     mixins: [ebookMixin],
     methods: {
         back () {

@@ -19,6 +19,7 @@ export default {
         hideTitleAndMenu () {
             // this.$store.dispatch('setMenuVisible', false);
             this.setMenuVisible(false);
+            this.setSettingVisible(-1);
         },
         initEpub () {
             const url  = 'http://127.0.0.1:9001/epub/' + this.fileName + ".epub";
@@ -26,7 +27,7 @@ export default {
             this.book = new Epub(url);
 
             this.rendition = this.book.renderTo('read',{
-                width: innerWidth,
+                width: 375,
                 height: innerHeight,
                 method: 'default'
             })
@@ -68,6 +69,9 @@ export default {
             }
         },
         toggleTitleAndMenu () {
+            if (this.menuVisible) {
+                this.setSettingVisible(-1);
+            }
             // this.$store.dispatch('setMenuVisible', !this.menuVisible);
             this.setMenuVisible(!this.menuVisible);
         }

@@ -2,7 +2,7 @@
     <div class="menu-bar">
 
         <transition name="slide-up">
-            <div class="menu-wrapper" v-show="menuVisible" :class="{'hide-box-shadow': menuVisible}">
+            <div class="menu-wrapper" v-show="menuVisible" :class="{'hide-box-shadow': !menuVisible || settingVisible >=0}">
 
                 <div class="icon-wrapper">
                     <span class="icon-menu " @click="showSetting(3)"></span>
@@ -23,6 +23,7 @@
             </div>
         </transition>
 
+        <ebook-setting-font></ebook-setting-font>
         <!-- <transition name="slide-up">
             <div class="setting-wrapper" v-show="ifSettingShow">
 
@@ -90,77 +91,26 @@
 
 <script>
 import {ebookMixin} from 'utils/mixin';
+
+import EbookSettingFont from 'components/ebook/EbookSettingFont';
 import ContentView from 'components/Content';
 
 export default {
-    name: 'MenuBar',
+    name: 'EbookMenu',
     mixins: [ebookMixin],
     components: {
+        EbookSettingFont
         // ContentView
-    },
-    props: {
-        fontSizeList: {
-            type: Array
-        },
-        defaultFontSize: {
-            type: Number
-        },
-        themeList: {
-            type: Array
-        },
-        defaultTheme: {
-            type: Number
-        },
-        bookAvailable: {
-            type: Boolean
-        },
-        navigation: {
-            type: Object
-        }
     },
     data () {
         return {
-            ifSettingShow: false,
-            showTag: 0,
-            progress: 0,
-            ifShowContent: false
+
         }
     },
     methods: {
-        hideContent () {
-            this.ifShowContent = false;
+        showSetting (key) {
+            this.setSettingVisible(key);
         },
-        jumpTo(target) {
-            this.$emit('jumpTo', target);
-        },
-        // 拖動進度條時觸發事件
-        onProgressInput(progress) {
-            this.progress = progress;
-            this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`;
-        },
-        // 進度條鬆開後觸發事件，根據進度條數值跳轉到指定位置
-        onProgressChange (progress) {
-            this.$emit('onProgressChange', progress);  
-        },
-        setFontSize (fontSize) {
-            this.$emit('setFontSize', fontSize);
-        },
-        setTheme (index) {
-            this.$emit('setTheme', index);
-        },
-        showSetting (tag) {
-            this.showTag = tag;
-
-            if (this.showTag === 3) {
-                this.ifSettingShow  = false;
-                this.ifShowContent  = true;
-            }else {
-                this.ifSettingShow  = true;
-            }
-        },
-        hideSetting () {
-            this.ifSettingShow  = false;
-        }
     },
 }
 </script>
@@ -198,115 +148,6 @@ export default {
                     font-size: px2rem(22);
                 }
             }
-        }
-
-        .setting-wrapper {
-            position: absolute;
-            bottom: px2rem(48);
-            left: 0;
-            z-index: 101;
-            width: 100%;
-            height: px2rem(60);
-            background: white;
-            box-shadow: 0 px2rem(-8) px2rem(8) rgba(0,0,0,.15);
-            
-            .setting-font-size {
-                display: flex;
-                height: 100%;
-
-                .preview {
-                    flex: 0 0 px2rem(40);
-                    @include center;
-                }
-
-                .select {
-                    flex: 1;
-                    display: flex;
-                    .select-wrapper {
-
-                        flex: 1;
-                        display: flex;
-                        @include center;
-
-                        &:first-child {
-                            .line:first-child {
-                                border-top: none;
-                            }
-                        }
-
-                        &:last-child {
-                            .line:last-child {
-                                border-top: none;
-                            }
-                        }
-
-                        .line {
-                            flex: 1;
-                            height: 0;
-                            border-top: px2rem(1) solid #ccc;
-                        }
-                        .point-wrapper {
-                            position: relative;
-                            flex: 0 0 0 ;
-                            width: 0;
-                            height: px2rem(7);
-                            border-left: px2rem(1) solid #ccc;
-
-                            .point {
-                                position: absolute;
-                                top: px2rem(-8);
-                                left: px2rem(-10);
-                                width: px2rem(20);
-                                height: px2rem(20);
-                                border: 1px solid #ccc;
-                                border-radius: 50%;
-                                background: white;
-                                box-shadow: 0 px2rem(4) px2rem(4) rgba(0,0,0,.15);
-                                @include center;
-                                .small-point {
-                                    width: px2rem(5);
-                                    height: px2rem(5);
-                                    background: black;
-                                    border-radius: 50%;
-                                }
-                            }
-                        }
-
-                    }
-                }
-            }
-
-            .setting-theme {
-                display: flex;
-                height: 100%;
-
-                .setting-theme-item {
-                    flex: 1;
-                    display: flex;
-                    flex-direction: column;
-                    padding: px2rem(5);
-                    box-sizing: border-box;
-                    .preview {
-                        flex: 1;
-                        border: px2rem(1) solid #ccc;
-                        box-sizing: border-box;
-                        &.no-border {
-                            border: none;
-                        }
-                    }
-
-                    .text {
-                        @include center;
-                        flex: 0 0 px2rem(20);
-                        font-size: px2rem(14);
-                        color: #ccc;
-                        &.selected {
-                            color: #333;
-                        }
-                    }
-                }
-            }
-            
         }
 
         .setting-progress {
