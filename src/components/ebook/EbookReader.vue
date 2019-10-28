@@ -20,6 +20,7 @@ export default {
             // this.$store.dispatch('setMenuVisible', false);
             this.setMenuVisible(false);
             this.setSettingVisible(-1);
+            this.setFontFamilyVisible(false);
         },
         initEpub () {
             const url  = 'http://127.0.0.1:9001/epub/' + this.fileName + ".epub";
@@ -56,6 +57,15 @@ export default {
                     // event.stopPropagation();
                 }
             })
+
+            this.rendition.hooks.content.register(contents => {
+                Promise.all([
+                    contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/daysOne.css`),
+                    contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/cabin.css`),
+                    contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/montserrat.css`),
+                    contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/tangerine.css`)
+                ]).then(() => {})
+            })
         },
         nextPage () {
             if (this.rendition) {
@@ -72,6 +82,7 @@ export default {
         toggleTitleAndMenu () {
             if (this.menuVisible) {
                 this.setSettingVisible(-1);
+                this.setFontFamilyVisible(false);
             }
             // this.$store.dispatch('setMenuVisible', !this.menuVisible);
             this.setMenuVisible(!this.menuVisible);

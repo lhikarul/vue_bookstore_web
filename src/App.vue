@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <style lang="scss" scoped>
   #app {
+    position: relative;
     margin: 0 auto;
     max-width: 375px;
     width: 100%;
