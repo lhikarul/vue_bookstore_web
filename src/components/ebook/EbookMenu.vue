@@ -2,28 +2,28 @@
     <div class="menu-bar">
 
         <transition name="slide-up">
-            <div class="menu-wrapper" v-show="ifTitleAndMenuShow" :class="{'hide-box-shadow': ifSettingShow || !ifTitleAndMenuShow}">
+            <div class="menu-wrapper" v-show="menuVisible" :class="{'hide-box-shadow': menuVisible}">
 
                 <div class="icon-wrapper">
-                    <span class="icon-menu icon" @click="showSetting(3)"></span>
+                    <span class="icon-menu " @click="showSetting(3)"></span>
                 </div>
 
                 <div class="icon-wrapper">
-                    <span class="icon-progress icon" @click="showSetting(2)"></span>
+                    <span class="icon-progress " @click="showSetting(2)"></span>
                 </div>
 
                 <div class="icon-wrapper">
-                    <span class="icon-bright icon" @click="showSetting(1)"></span>
+                    <span class="icon-bright " @click="showSetting(1)"></span>
                 </div>
 
                 <div class="icon-wrapper">
-                    <span class="icon-a icon" @click="showSetting(0)">A</span>
+                    <span class="icon-A " @click="showSetting(0)"></span>
                 </div>
 
             </div>
         </transition>
 
-        <transition name="slide-up">
+        <!-- <transition name="slide-up">
             <div class="setting-wrapper" v-show="ifSettingShow">
 
                 <div class="setting-font-size" v-if="showTag === 0">
@@ -70,37 +70,35 @@
                     </div>
                 </div>
             </div>
-        </transition>
-
+        </transition> -->
+<!-- 
         <content-view   :ifShowContent="ifShowContent"
                         v-show="ifShowContent"
                         :navigation="navigation"
                         :bookAvailable="bookAvailable"
                         @jumpTo="jumpTo"
-        ></content-view>
+        ></content-view> -->
 
-        <transition name="fade">
+        <!-- <transition name="fade">
             <div class="content-mask"
                 v-show="ifShowContent"
                 @click="hideContent"
             ></div>
-        </transition>
+        </transition> -->
     </div>
 </template>
 
 <script>
+import {ebookMixin} from 'utils/mixin';
 import ContentView from 'components/Content';
 
 export default {
     name: 'MenuBar',
+    mixins: [ebookMixin],
     components: {
-        ContentView
+        // ContentView
     },
     props: {
-        ifTitleAndMenuShow: {
-            type: Boolean,
-            default: false
-        },
         fontSizeList: {
             type: Array
         },
@@ -163,7 +161,7 @@ export default {
         hideSetting () {
             this.ifSettingShow  = false;
         }
-    }
+    },
 }
 </script>
 
@@ -182,6 +180,7 @@ export default {
             height: px2rem(48);
             background: white;
             box-shadow: 0 px2rem(-8) px2rem(8) rgba(0,0,0,.15);
+            font-size: px2rem(20);
 
             &.hide-box-shadow {
                 box-shadow: none;
@@ -192,11 +191,11 @@ export default {
                 @include center;
 
                 .icon-progress {
-                    font-size: px2rem(28);
+                    font-size: px2rem(24);
                 }
 
                 .icon-bright {
-                    font-size: px2rem(24);
+                    font-size: px2rem(22);
                 }
             }
         }

@@ -1,7 +1,8 @@
 <template>
     <div class="ebook">
-
+        <ebook-title></ebook-title>
         <ebook-reader></ebook-reader>
+        <ebook-menu></ebook-menu>
 
         <!-- <title-bar :ifTitleAndMenuShow="ifTitleAndMenuShow"></title-bar> -->
 
@@ -35,8 +36,8 @@
 import Epub from 'epubjs';
 
 import EbookReader from 'components/ebook/EbookReader';
-import TitleBar from 'components/TitleBar';
-import MenuBar from 'components/MenuBar';
+import EbookTitle from 'components//ebook/EbookTitle';
+import EbookMenu from 'components/ebook/EbookMenu';
 
 console.log(process.env.NODE_ENV)
 const DOWNLOAD_URL = process.env.NODE_ENV === 'development' ? '/2018_Book_AgileProcessesInSoftwareEngine.epub' : './2018_Book_AgileProcessesInSoftwareEngine.epub';
@@ -44,9 +45,9 @@ const DOWNLOAD_URL = process.env.NODE_ENV === 'development' ? '/2018_Book_AgileP
 export default {
     name: 'Ebook',
     components: {
-        TitleBar,
-        MenuBar,
-        EbookReader
+        EbookTitle,
+        EbookReader,
+        EbookMenu
     },
     data () {
         return {

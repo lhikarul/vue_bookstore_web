@@ -5,13 +5,21 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
-
+import {ebookMixin} from 'utils/mixin';
+import {mapActions} from 'vuex';
 import Epub from 'epubjs';
 
 export default {
     name: 'EbookReader',
+    mixins: [ebookMixin],
     methods: {
+        ...mapActions([
+            'setMenuVisible'
+        ]),
+        hideTitleAndMenu () {
+            // this.$store.dispatch('setMenuVisible', false);
+            this.setMenuVisible(false);
+        },
         initEpub () {
             const url  = 'http://127.0.0.1:9001/epub/' + this.fileName + ".epub";
 
@@ -42,31 +50,34 @@ export default {
                     this.nextPage()
                 }else {
                     this.toggleTitleAndMenu();
-                    event.preventDefault();
-                    event.stopPropagation();
+                    // event.preventDefault();
+                    // event.stopPropagation();
                 }
             })
         },
         nextPage () {
             if (this.rendition) {
                 this.rendition.next()
+                this.hideTitleAndMenu()
             }
         },
         prevPage () {
             if (this.rendition) {
                 this.rendition.prev()
+                this.hideTitleAndMenu()
             }
         },
         toggleTitleAndMenu () {
-
+            // this.$store.dispatch('setMenuVisible', !this.menuVisible);
+            this.setMenuVisible(!this.menuVisible);
         }
-    },
-    computed: {
-        ...mapGetters(['fileName'])
     },
     mounted () {
         const fileName = this.$route.params.fileName.split('|').join('/');
-        this.$store.dispatch('setFileName', fileName).then(() => {
+        // this.$store.dispatch('setFileName', fileName).then(() => {
+        //     this.initEpub()
+        // })
+        this.setFileName(fileName).then(() => {
             this.initEpub()
         })
     }
