@@ -24,6 +24,7 @@
         </transition>
 
         <ebook-setting-font></ebook-setting-font>
+        <ebook-setting-font-popup></ebook-setting-font-popup>
         <!-- <transition name="slide-up">
             <div class="setting-wrapper" v-show="ifSettingShow">
 
@@ -93,13 +94,16 @@
 import {ebookMixin} from 'utils/mixin';
 
 import EbookSettingFont from 'components/ebook/EbookSettingFont';
+import EbookSettingFontPopup from 'components/ebook/EbookSettingFontPopup';
+
 import ContentView from 'components/Content';
 
 export default {
     name: 'EbookMenu',
     mixins: [ebookMixin],
     components: {
-        EbookSettingFont
+        EbookSettingFont,
+        EbookSettingFontPopup
         // ContentView
     },
     data () {

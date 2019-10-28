@@ -5,9 +5,11 @@ export const ebookMixin = {
         ...mapGetters([
             'currentBook',
             'fileName',
+            'fontFamilyVisible',
             'menuVisible',
             'settingVisible',
-            'defaultFontSize'
+            'defaultFontSize',
+            'defaultFontFamily'
         ])
     },
     methods: {
@@ -16,7 +18,9 @@ export const ebookMixin = {
             'setMenuVisible',
             'setFileName',
             'setSettingVisible',
-            'setDefaultFontSize'
+            'setDefaultFontSize',
+            'setDefaultFontFamily',
+            'setFontFamilyVisible'
         ])
     }
 }
