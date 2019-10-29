@@ -6,7 +6,7 @@
 
 <script>
 import {ebookMixin} from 'utils/mixin';
-import {getFontFamily,saveFontFamily,getFontSize,saveFontSize} from 'utils/localStorage';
+import {getFontFamily,saveFontFamily,getFontSize,saveFontSize,getTheme,saveTheme} from 'utils/localStorage';
 import {mapActions} from 'vuex';
 import Epub from 'epubjs';
 
@@ -39,6 +39,7 @@ export default {
 
                 this.initFontSize();
                 this.initFontFamily();
+                this.initTheme();
 
             })
 
@@ -93,6 +94,21 @@ export default {
                 this.rendition.themes.font(font);
                 this.setDefaultFontFamily(font);
             }
+        },
+        initTheme () {
+
+            var defaultTheme = getTheme(this.fileName);
+
+            if (!defaultTheme) {
+                defaultTheme = this.themeList[0].name;
+                this.setDefaultTheme(defaultTheme);
+                saveTheme(this.fileName, defaultTheme);
+            }
+
+            this.themeList.forEach(theme => {
+                this.rendition.themes.register(theme.name, theme.style)
+            })
+            this.rendition.themes.select(defaultTheme);
         },
         nextPage () {
             if (this.rendition) {

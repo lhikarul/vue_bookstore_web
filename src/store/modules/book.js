@@ -3,6 +3,7 @@ const book = {
         currentBook: null,
         defaultFontSize: 16,
         defaultFontFamily: 'Default',
+        defaultTheme: 'Default',
         fileName: '',
         fontFamilyVisible: false,
         menuVisible: false,
@@ -29,6 +30,9 @@ const book = {
         },
         'SET_DEFAULT_FONT_FAMILY': (state,defaultFontFamily) => {
             state.defaultFontFamily = defaultFontFamily
+        },
+        'SET_DEFAULT_THEME': (state,defaultTheme) => {
+            state.defaultTheme = defaultTheme
         }
     }
 }
