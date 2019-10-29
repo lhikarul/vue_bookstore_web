@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import {addCss} from 'utils/book';
 import {ebookMixin} from 'utils/mixin';
 import {getFontFamily,saveFontFamily,getFontSize,saveFontSize,getTheme,saveTheme} from 'utils/localStorage';
 import {mapActions} from 'vuex';
@@ -24,7 +25,7 @@ export default {
             this.setFontFamilyVisible(false);
         },
         initEpub () {
-            const url  = 'http://127.0.0.1:9001/epub/' + this.fileName + ".epub";
+            const url  = `${process.env.VUE_APP_RES_URL}/epub/` + this.fileName + ".epub";
 
             this.book = new Epub(url);
             this.setCurrentBook(this.book);
@@ -40,6 +41,7 @@ export default {
                 this.initFontSize();
                 this.initFontFamily();
                 this.initTheme();
+                this.initGlobalStyle();
 
             })
 
@@ -101,9 +103,10 @@ export default {
 
             if (!defaultTheme) {
                 defaultTheme = this.themeList[0].name;
-                this.setDefaultTheme(defaultTheme);
                 saveTheme(this.fileName, defaultTheme);
             }
+
+            this.setDefaultTheme(defaultTheme);
 
             this.themeList.forEach(theme => {
                 this.rendition.themes.register(theme.name, theme.style)
