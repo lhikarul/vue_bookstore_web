@@ -6,6 +6,7 @@
 
 <script>
 import {ebookMixin} from 'utils/mixin';
+import {getFontFamily,saveFontFamily,getFontSize,saveFontSize} from 'utils/localStorage';
 import {mapActions} from 'vuex';
 import Epub from 'epubjs';
 
@@ -33,7 +34,13 @@ export default {
                 height: innerHeight,
                 method: 'default'
             })
-            this.rendition.display();
+
+            this.rendition.display().then(() => {
+
+                this.initFontSize();
+                this.initFontFamily();
+
+            })
 
             // 偵聽移動端滑動事件
             this.rendition.on('touchstart', event => {
@@ -66,6 +73,26 @@ export default {
                     contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/tangerine.css`)
                 ]).then(() => {})
             })
+        },
+        initFontSize () {
+            var fontSize = getFontSize(this.fileName);
+
+            if (!fontSize) {
+                saveFontSize(this.fileName,this.defaultFontSize);
+            }else {
+                this.rendition.themes.fontSize(fontSize);
+                this.setDefaultFontSize(fontSize);
+            }
+        },
+        initFontFamily () {
+            var font = getFontFamily(this.fileName);
+
+            if (!font) {
+                saveFontFamily(this.fileName,this.defaultFontFamily);
+            }else {
+                this.rendition.themes.font(font);
+                this.setDefaultFontFamily(font);
+            }
         },
         nextPage () {
             if (this.rendition) {
