@@ -46,18 +46,33 @@ export default {
     name: 'EbookSettingProgress',
     mixins: [ebookMixin],
     methods: {
-        onProgressChange(progress) {
+        displayProgress () {
+            const cfi = this.currentBook.locations.cfiFromPercentage(this.progress / 100);
+            this.currentBook.rendition.display(cfi);
+        },
+        nextSection () {
 
         },
+        onProgressChange(progress) {
+            this.setProgress(progress).then(() => {
+                this.displayProgress();
+                this.updatePorgressBg();
+            })
+        },
         onProgressInput (progress) {
-
+            this.setProgress(progress).then(() => {
+                this.updatePorgressBg();
+            })
         },
         prevSection () {
 
         },
-        nextSection () {
-
+        updatePorgressBg () {
+            this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`
         }
+    },
+    updated () {
+        this.updatePorgressBg();
     }
 }
 </script>
@@ -109,8 +124,6 @@ export default {
                     width: 100%;
                     -webkit-appearance: none;
                     height: px2rem(2);
-                    background: linear-gradient(#999,#999) no-repeat, #ddd;
-                    background-size: 0 100% !important;
                     &:focus {
                         outline: none;
                     }
