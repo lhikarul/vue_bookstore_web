@@ -26,6 +26,8 @@
         <ebook-setting-font></ebook-setting-font>
         <ebook-setting-font-popup></ebook-setting-font-popup>
         <ebook-setting-theme></ebook-setting-theme>
+        <ebook-setting-progress></ebook-setting-progress>
+
         <!-- <transition name="slide-up">
             <div class="setting-wrapper" v-show="ifSettingShow">
 
@@ -97,6 +99,7 @@ import {ebookMixin} from 'utils/mixin';
 import EbookSettingFont from 'components/ebook/EbookSettingFont';
 import EbookSettingFontPopup from 'components/ebook/EbookSettingFontPopup';
 import EbookSettingTheme from 'components/ebook/EbookSettingTheme';
+import EbookSettingProgress from 'components/ebook/EbookSettingProgress';
 
 import ContentView from 'components/Content';
 
@@ -106,7 +109,9 @@ export default {
     components: {
         EbookSettingFont,
         EbookSettingFontPopup,
-        EbookSettingTheme
+        EbookSettingTheme,
+        EbookSettingProgress
+        
         // ContentView
     },
     data () {

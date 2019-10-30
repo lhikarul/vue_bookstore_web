@@ -30,21 +30,37 @@ export default {
             this.book = new Epub(url);
             this.setCurrentBook(this.book);
 
-            this.rendition = this.book.renderTo('read',{
-                width: 375,
-                height: innerHeight,
-                method: 'default'
+            this.initRendition();
+            this.initGesture();
+
+            this.book.ready
+            .then(() => {
+                return this.book.locations.generate(750 * (window.innerWidth / 375) * (getFontSize(this.fileName / 16)))
+            }).then(() => {
+                this.setBookAvailable(true);
             })
+        },
+        initFontSize () {
+            var fontSize = getFontSize(this.fileName);
 
-            this.rendition.display().then(() => {
+            if (!fontSize) {
+                saveFontSize(this.fileName,this.defaultFontSize);
+            }else {
+                this.rendition.themes.fontSize(fontSize);
+                this.setDefaultFontSize(fontSize);
+            }
+        },
+        initFontFamily () {
+            var font = getFontFamily(this.fileName);
 
-                this.initFontSize();
-                this.initFontFamily();
-                this.initTheme();
-                this.initGlobalStyle();
-
-            })
-
+            if (!font) {
+                saveFontFamily(this.fileName,this.defaultFontFamily);
+            }else {
+                this.rendition.themes.font(font);
+                this.setDefaultFontFamily(font);
+            }
+        },
+        initGesture () {
             // 偵聽移動端滑動事件
             this.rendition.on('touchstart', event => {
 
@@ -68,6 +84,23 @@ export default {
                 }
             })
 
+        },
+        initRendition () {
+            this.rendition = this.book.renderTo('read',{
+                width: 375,
+                height: innerHeight,
+                method: 'default'
+            })
+
+            this.rendition.display().then(() => {
+
+                this.initFontSize();
+                this.initFontFamily();
+                this.initTheme();
+                this.initGlobalStyle();
+
+            })
+
             this.rendition.hooks.content.register(contents => {
                 Promise.all([
                     contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/daysOne.css`),
@@ -76,26 +109,6 @@ export default {
                     contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/tangerine.css`)
                 ]).then(() => {})
             })
-        },
-        initFontSize () {
-            var fontSize = getFontSize(this.fileName);
-
-            if (!fontSize) {
-                saveFontSize(this.fileName,this.defaultFontSize);
-            }else {
-                this.rendition.themes.fontSize(fontSize);
-                this.setDefaultFontSize(fontSize);
-            }
-        },
-        initFontFamily () {
-            var font = getFontFamily(this.fileName);
-
-            if (!font) {
-                saveFontFamily(this.fileName,this.defaultFontFamily);
-            }else {
-                this.rendition.themes.font(font);
-                this.setDefaultFontFamily(font);
-            }
         },
         initTheme () {
 

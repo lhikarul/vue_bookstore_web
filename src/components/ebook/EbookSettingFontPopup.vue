@@ -53,8 +53,6 @@ export default {
             }else {
                 this.currentBook.rendition.themes.font(font);
             }
-
-            this.currentBook.rendition.themes.font(font);
         }
     }
 }

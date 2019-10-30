@@ -1,4 +1,5 @@
 const book = {
+    bookAvailable: state => state.book.bookAvailable,
     currentBook: state => state.book.currentBook,
     defaultFontSize: state => state.book.defaultFontSize,
     defaultFontFamily: state => state.book.defaultFontFamily,
@@ -6,6 +7,7 @@ const book = {
     fileName: state => state.book.fileName,
     fontFamilyVisible: state => state.book.fontFamilyVisible,
     menuVisible: state => state.book.menuVisible,
+    progress: state => state.book.progress,
     settingVisible: state => state.book.settingVisible
 }
 

@@ -1,5 +1,6 @@
 const book = {
     state: {
+        bookAvailable: false,
         currentBook: null,
         defaultFontSize: 16,
         defaultFontFamily: 'Default',
@@ -7,9 +8,13 @@ const book = {
         fileName: '',
         fontFamilyVisible: false,
         menuVisible: false,
+        progress: 0,
         settingVisible: -1, // -1:不顯示, 0:字形設置, 1:主題, 2:進度條, 3:目錄
     },
     mutations: {
+        'SET_BOOK_AVAILABLE': (state,value) => {
+            state.bookAvailable = value
+        },
         'SET_CURRENT_BOOK': (state,currentBook) => {
             state.currentBook = currentBook
         },
@@ -33,6 +38,9 @@ const book = {
         },
         'SET_DEFAULT_THEME': (state,defaultTheme) => {
             state.defaultTheme = defaultTheme
+        },
+        'SET_PROGRESS': (state,progress) => {
+            state.progress = progress;
         }
     }
 }

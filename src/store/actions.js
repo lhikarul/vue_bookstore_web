@@ -1,4 +1,7 @@
 const actions = {
+    setBookAvailable: ({commit}, value) => {
+        return commit('SET_BOOK_AVAILABLE', value)
+    },
     setFileName: ({commit},fileName) => {
         return commit('SET_FILENAME', fileName)
     },
@@ -22,6 +25,9 @@ const actions = {
     },
     setCurrentBook: ({commit},currentBook) => {
         return commit('SET_CURRENT_BOOK',currentBook)
+    },
+    setProgress: ({commit}, progress) => {
+        return commit('SET_PROGRESS', progress)
     }
 }
 

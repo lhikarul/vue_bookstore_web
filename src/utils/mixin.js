@@ -5,14 +5,16 @@ import {themeList,addCss, removeAllCss} from 'utils/book';
 export const ebookMixin = {
     computed: {
         ...mapGetters([
+            'bookAvailable',
             'currentBook',
+            'defaultFontSize',
+            'defaultFontFamily',
+            'defaultTheme',
             'fileName',
             'fontFamilyVisible',
             'menuVisible',
+            'progress',
             'settingVisible',
-            'defaultFontSize',
-            'defaultFontFamily',
-            'defaultTheme'
         ]),
         themeList () {
             return themeList(this);
@@ -20,14 +22,16 @@ export const ebookMixin = {
     },
     methods: {
         ...mapActions([
+            'setBookAvailable',
             'setCurrentBook',
-            'setMenuVisible',
-            'setFileName',
-            'setSettingVisible',
             'setDefaultFontSize',
             'setDefaultFontFamily',
+            'setDefaultTheme',
             'setFontFamilyVisible',
-            'setDefaultTheme'
+            'setFileName',
+            'setMenuVisible',
+            'setProgress',
+            'setSettingVisible',
         ]),
         initGlobalStyle () {
             removeAllCss();
