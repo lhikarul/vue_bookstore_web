@@ -18,12 +18,6 @@ export default {
         ...mapActions([
             'setMenuVisible'
         ]),
-        hideTitleAndMenu () {
-            // this.$store.dispatch('setMenuVisible', false);
-            this.setMenuVisible(false);
-            this.setSettingVisible(-1);
-            this.setFontFamilyVisible(false);
-        },
         initEpub () {
             const url  = `${process.env.VUE_APP_RES_URL}/epub/` + this.fileName + ".epub";
 

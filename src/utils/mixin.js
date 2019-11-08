@@ -49,6 +49,13 @@ export const ebookMixin = {
                 })
             }
         },
+        hideTitleAndMenu () {
+            // this.$store.dispatch('setMenuVisible', false);
+            console.log('hide')
+            this.setMenuVisible(false);
+            this.setSettingVisible(-1);
+            this.setFontFamilyVisible(false);
+        },
         initGlobalStyle () {
             removeAllCss();
             switch (this.defaultTheme) {

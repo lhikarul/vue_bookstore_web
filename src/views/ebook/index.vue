@@ -55,54 +55,54 @@ export default {
     },
     data () {
         return {
-            ifTitleAndMenuShow: false,
-            fontSizeList: [
-                {fontSize: 12},
-                {fontSize: 14},
-                {fontSize: 16},
-                {fontSize: 18},
-                {fontSize: 20},
-                {fontSize: 22},
-                {fontSize: 24},
-            ],
-            defaultFontSize: 16,
-            themeList: [
-                {
-                    name: 'default',
-                    style: {
-                        body: {
-                            'color': '#000','background': '#fff'
-                        }
-                    }
-                },
-                {
-                    name: 'eye',
-                    style: {
-                        body: {
-                            'color': '#000','background': '#ceeaba'
-                        }
-                    }
-                },
-                {
-                    name: 'night',
-                    style: {
-                        body: {
-                            'color': '#fff','background': '#000'
-                        }
-                    }
-                },
-                {
-                    name: 'gold',
-                    style: {
-                        body: {
-                            'color': '#000','background': 'rgb(241,236,226)'
-                        }
-                    }
-                }
-            ],
-            defalutTheme: 0,
-            bookAvailable: false,
-            navigation: {}
+            // ifTitleAndMenuShow: false,
+            // fontSizeList: [
+            //     {fontSize: 12},
+            //     {fontSize: 14},
+            //     {fontSize: 16},
+            //     {fontSize: 18},
+            //     {fontSize: 20},
+            //     {fontSize: 22},
+            //     {fontSize: 24},
+            // ],
+            // defaultFontSize: 16,
+            // themeList: [
+            //     {
+            //         name: 'default',
+            //         style: {
+            //             body: {
+            //                 'color': '#000','background': '#fff'
+            //             }
+            //         }
+            //     },
+            //     {
+            //         name: 'eye',
+            //         style: {
+            //             body: {
+            //                 'color': '#000','background': '#ceeaba'
+            //             }
+            //         }
+            //     },
+            //     {
+            //         name: 'night',
+            //         style: {
+            //             body: {
+            //                 'color': '#fff','background': '#000'
+            //             }
+            //         }
+            //     },
+            //     {
+            //         name: 'gold',
+            //         style: {
+            //             body: {
+            //                 'color': '#000','background': 'rgb(241,236,226)'
+            //             }
+            //         }
+            //     }
+            // ],
+            // defalutTheme: 0,
+            // bookAvailable: false,
+            // navigation: {}
         }
     },
     methods: {
@@ -118,90 +118,90 @@ export default {
                 }
             },1000)
         },
-        hideTitleAndMuen () {
-            this.ifTitleAndMenuShow = false;
-            this.$refs.menuBar.hideSetting();
-            this.$refs.menuBar.hideContent();
-        },
-        // 根據連結跳轉至指定位置
-        jumTo (href) {
-            this.rendition.display(href);
-            this.hideTitleAndMuen();
-        },
-        onProgressChange (progress) {
-            // progress 進度條的數值 0 ~ 100
-            const percentage = progress / 100;
-            const location = percentage > 0 ? this.locations.cfiFromPercentage(percentage) : 0;
-            this.rendition.display(location);
-        },
-        registerTheme () {
-            this.themeList.forEach(theme => {
-                this.themes.register(theme.name,theme.style)
-            })
-        },
-        setTheme (index) {
-            this.themes.select(this.themeList[index].name);
-            this.defalutTheme = index;
-        },
-        setFontSize (fontSize) {
-            this.defaultFontSize = fontSize;
-            if (this.themes) {
-                this.themes.fontSize(fontSize + 'px');
-            }
-        },
-        showEpub () {
-            // 生成 book
-            this.book = new Epub(DOWNLOAD_URL);
+        // hideTitleAndMuen () {
+        //     this.ifTitleAndMenuShow = false;
+        //     this.$refs.menuBar.hideSetting();
+        //     this.$refs.menuBar.hideContent();
+        // },
+        // // 根據連結跳轉至指定位置
+        // jumTo (href) {
+        //     this.rendition.display(href);
+        //     this.hideTitleAndMuen();
+        // },
+        // onProgressChange (progress) {
+        //     // progress 進度條的數值 0 ~ 100
+        //     const percentage = progress / 100;
+        //     const location = percentage > 0 ? this.locations.cfiFromPercentage(percentage) : 0;
+        //     this.rendition.display(location);
+        // },
+        // registerTheme () {
+        //     this.themeList.forEach(theme => {
+        //         this.themes.register(theme.name,theme.style)
+        //     })
+        // },
+        // setTheme (index) {
+        //     this.themes.select(this.themeList[index].name);
+        //     this.defalutTheme = index;
+        // },
+        // setFontSize (fontSize) {
+        //     this.defaultFontSize = fontSize;
+        //     if (this.themes) {
+        //         this.themes.fontSize(fontSize + 'px');
+        //     }
+        // },
+        // showEpub () {
+        //     // 生成 book
+        //     this.book = new Epub(DOWNLOAD_URL);
 
-            // 生成 rendition
-            this.rendition = this.book.renderTo('read', {
-                width: window.innerWidth,
-                height: window.innerHeight
-            })
+        //     // 生成 rendition
+        //     this.rendition = this.book.renderTo('read', {
+        //         width: window.innerWidth,
+        //         height: window.innerHeight
+        //     })
 
-            // 渲染電子書
-            this.rendition.display();
+        //     // 渲染電子書
+        //     this.rendition.display();
 
-            // get theme 物件
-            this.themes = this.rendition.themes;
+        //     // get theme 物件
+        //     this.themes = this.rendition.themes;
 
-            // 默認 fontsize
-            this.setFontSize(this.defaultFontSize);
+        //     // 默認 fontsize
+        //     this.setFontSize(this.defaultFontSize);
 
-            // this.themes.register(name,styles)
-            // this.themes.select(name)
-            this.registerTheme()
-            this.setTheme(this.defalutTheme);
+        //     // this.themes.register(name,styles)
+        //     // this.themes.select(name)
+        //     this.registerTheme()
+        //     this.setTheme(this.defalutTheme);
 
 
-            // 獲取 location object
-            // 通過 epubjs 的鉤子函數實現
-            this.book.ready.then(() => {
-                this.navigation = this.book.navigation;
-                return this.book.locations.generate()
-            }).then(result => {
-                this.locations = this.book.locations;
-                this.bookAvailable = true;
-            })
-        },
-        toggleTitleAndMenu () {
+        //     // 獲取 location object
+        //     // 通過 epubjs 的鉤子函數實現
+        //     this.book.ready.then(() => {
+        //         this.navigation = this.book.navigation;
+        //         return this.book.locations.generate()
+        //     }).then(result => {
+        //         this.locations = this.book.locations;
+        //         this.bookAvailable = true;
+        //     })
+        // },
+        // toggleTitleAndMenu () {
 
-            this.ifTitleAndMenuShow = !this.ifTitleAndMenuShow;
+        //     this.ifTitleAndMenuShow = !this.ifTitleAndMenuShow;
 
-            if (!this.ifTitleAndMenuShow) {
-                this.$refs.menuBar.hideSetting();
-            }
-        },
-        prevPage () {
-            if (this.rendition) {
-                this.rendition.prev();
-            }
-        },
-        nextPage () {
-            if (this.rendition) {
-                this.rendition.next();
-            }
-        }
+        //     if (!this.ifTitleAndMenuShow) {
+        //         this.$refs.menuBar.hideSetting();
+        //     }
+        // },
+        // prevPage () {
+        //     if (this.rendition) {
+        //         this.rendition.prev();
+        //     }
+        // },
+        // nextPage () {
+        //     if (this.rendition) {
+        //         this.rendition.next();
+        //     }
+        // }
     },
     mounted () {
         // this.showEpub()

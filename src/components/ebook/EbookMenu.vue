@@ -27,6 +27,7 @@
         <ebook-setting-font-popup></ebook-setting-font-popup>
         <ebook-setting-theme></ebook-setting-theme>
         <ebook-setting-progress></ebook-setting-progress>
+        <ebook-slide></ebook-slide>
 
         <!-- <transition name="slide-up">
             <div class="setting-wrapper" v-show="ifSettingShow">
@@ -100,6 +101,7 @@ import EbookSettingFont from 'components/ebook/EbookSettingFont';
 import EbookSettingFontPopup from 'components/ebook/EbookSettingFontPopup';
 import EbookSettingTheme from 'components/ebook/EbookSettingTheme';
 import EbookSettingProgress from 'components/ebook/EbookSettingProgress';
+import EbookSlide from 'components/ebook/EbookSlide';
 
 import ContentView from 'components/Content';
 
@@ -110,7 +112,8 @@ export default {
         EbookSettingFont,
         EbookSettingFontPopup,
         EbookSettingTheme,
-        EbookSettingProgress
+        EbookSettingProgress,
+        EbookSlide
         
         // ContentView
     },
