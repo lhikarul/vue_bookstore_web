@@ -30,7 +30,8 @@
                 </div>
 
                 <div class="text-wrapper">
-                    <span>{{bookAvailable ? progress + '%' : '加載中...'}}</span>
+                    <span class="progress-section-text">{{getSectionName}}</span>
+                    <span>({{bookAvailable ? progress + '%' : '加載中...'}})</span>
                 </div>
 
             </div>
@@ -49,7 +50,9 @@ export default {
         displaySection () {
             const sectionInfo = this.currentBook.section(this.section);
             if (sectionInfo && sectionInfo.href) {
-                this.currentBook.rendition.display(sectionInfo.href);
+                this.currentBook.rendition.display(sectionInfo.href).then(() => {
+                    this.refreshLocation();
+                })
             }
         },
         displayProgress () {
@@ -81,8 +84,23 @@ export default {
                 })
             }
         },
+        refreshLocation () {
+            const currentLocation = this.currentBook.rendition.currentLocation();
+            const progress = this.currentBook.locations.percentageFromCfi(currentLocation.start.cfi);
+            this.setProgress(Math.floor(progress * 100));
+        },
         updatePorgressBg () {
             this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`
+        }
+    },
+    computed: {
+        getSectionName () {
+            if (this.section) {
+                const sectionInfo = this.currentBook.section(this.section);
+                if (sectionInfo && sectionInfo.href) {
+                    return this.currentBook.navigation.get(sectionInfo.href).label;
+                }
+            }
         }
     },
     updated () {
@@ -160,7 +178,15 @@ export default {
                 width: 100%;
                 color: #333;
                 font-size: px2rem(12);
-                text-align: center;
+                padding: 0 px2rem(15);
+                box-sizing: border-box;
+                @include center;
+
+                .progress-section-text {
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
             }
 
         }
