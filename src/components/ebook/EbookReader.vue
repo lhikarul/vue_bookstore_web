@@ -7,7 +7,7 @@
 <script>
 import {addCss} from 'utils/book';
 import {ebookMixin} from 'utils/mixin';
-import {getFontFamily,saveFontFamily,getFontSize,saveFontSize,getTheme,saveTheme} from 'utils/localStorage';
+import {getFontFamily,saveFontFamily,getFontSize,saveFontSize,getTheme,saveTheme,getLocation} from 'utils/localStorage';
 import {mapActions} from 'vuex';
 import Epub from 'epubjs';
 
@@ -38,6 +38,7 @@ export default {
                 return this.book.locations.generate(750 * (window.innerWidth / 375) * (getFontSize(this.fileName / 16)))
             }).then(() => {
                 this.setBookAvailable(true);
+                this.refreshLocation();
             })
         },
         initFontSize () {
@@ -92,13 +93,21 @@ export default {
                 method: 'default'
             })
 
-            this.rendition.display().then(() => {
+            // this.rendition.display().then(() => {
 
+            //     this.initFontSize();
+            //     this.initFontFamily();
+            //     this.initTheme();
+            //     this.initGlobalStyle();
+            //     this.refreshLocation();
+
+            // })
+            const location = getLocation(this.fileName);
+            this.display(location, () => {
                 this.initFontSize();
                 this.initFontFamily();
                 this.initTheme();
                 this.initGlobalStyle();
-
             })
 
             this.rendition.hooks.content.register(contents => {
@@ -128,13 +137,17 @@ export default {
         },
         nextPage () {
             if (this.rendition) {
-                this.rendition.next()
+                this.rendition.next().then(() => {
+                    this.refreshLocation()
+                })
                 this.hideTitleAndMenu()
             }
         },
         prevPage () {
             if (this.rendition) {
-                this.rendition.prev()
+                this.rendition.prev().then(() => {
+                    this.refreshLocation()
+                })
                 this.hideTitleAndMenu()
             }
         },

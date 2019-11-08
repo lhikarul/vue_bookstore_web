@@ -39,11 +39,15 @@ import EbookReader from 'components/ebook/EbookReader';
 import EbookTitle from 'components//ebook/EbookTitle';
 import EbookMenu from 'components/ebook/EbookMenu';
 
+import {ebookMixin} from '../../utils/mixin';
+import {getReadTime,saveReadTime} from 'utils/localStorage';
+
 console.log(process.env.NODE_ENV)
 const DOWNLOAD_URL = process.env.NODE_ENV === 'development' ? '/2018_Book_AgileProcessesInSoftwareEngine.epub' : './2018_Book_AgileProcessesInSoftwareEngine.epub';
 
 export default {
     name: 'Ebook',
+    mixins: [ebookMixin],
     components: {
         EbookTitle,
         EbookReader,
@@ -102,6 +106,18 @@ export default {
         }
     },
     methods: {
+        startLoopReadTime () {
+            var readTime = getReadTime(this.fileName);
+            if (!readTime) {
+                readTime = 0;
+            }
+            this.task = setInterval(() => {
+                readTime++;
+                if (readTime % 30 === 0) {
+                    saveReadTime(this.fileName, readTime);
+                }
+            },1000)
+        },
         hideTitleAndMuen () {
             this.ifTitleAndMenuShow = false;
             this.$refs.menuBar.hideSetting();
@@ -189,6 +205,12 @@ export default {
     },
     mounted () {
         // this.showEpub()
+        this.startLoopReadTime();
+    },
+    beforeDestroy () {
+        if (this.task) {
+            clearInterval(this.task);
+        }
     }
 
 }

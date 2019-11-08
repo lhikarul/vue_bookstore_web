@@ -5,7 +5,7 @@
             <div class="setting-progress">
 
                 <div class="read-time-wrapper">
-                    <span class="read-time-text">111</span>
+                    <span class="read-time-text">{{getReadTimeText()}}</span>
                     <span class="icon-forward"></span>
                 </div>
 
@@ -42,6 +42,7 @@
 
 <script>
 import {ebookMixin} from 'utils/mixin';
+import {getReadTime} from 'utils/localStorage';
 
 export default {
     name: 'EbookSettingProgress',
@@ -50,14 +51,23 @@ export default {
         displaySection () {
             const sectionInfo = this.currentBook.section(this.section);
             if (sectionInfo && sectionInfo.href) {
-                this.currentBook.rendition.display(sectionInfo.href).then(() => {
-                    this.refreshLocation();
-                })
+                this.display(sectionInfo.href)
             }
         },
         displayProgress () {
             const cfi = this.currentBook.locations.cfiFromPercentage(this.progress / 100);
-            this.currentBook.rendition.display(cfi);
+            this.display(cfi);
+        },
+        getReadTimeText () {
+            return this.$t('book.haveRead').replace('$1', this.getReadTimeByMinute())
+        },
+        getReadTimeByMinute () {
+            const readTime = getReadTime(this.fileName);
+            if (!readTime) {
+                return 0;
+            }else {
+                return Math.ceil(readTime / 60);
+            }
         },
         nextSection () {
             if (this.section < this.currentBook.spine.length - 1 && this.bookAvailable) {
@@ -83,11 +93,6 @@ export default {
                     this.displaySection();
                 })
             }
-        },
-        refreshLocation () {
-            const currentLocation = this.currentBook.rendition.currentLocation();
-            const progress = this.currentBook.locations.percentageFromCfi(currentLocation.start.cfi);
-            this.setProgress(Math.floor(progress * 100));
         },
         updatePorgressBg () {
             this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`
@@ -183,9 +188,7 @@ export default {
                 @include center;
 
                 .progress-section-text {
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                    white-space: nowrap;
+                    @include ellipsis;
                 }
             }
 

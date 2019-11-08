@@ -77,3 +77,19 @@ export function getLocale () {
 export function saveLocale (local) {
     return setLocalStorage('local', local);
 }
+
+export function getLocation (fileName) {
+    return getBookObject(fileName, 'location')
+}
+
+export function saveLocation (fileName, location) {
+    setBookObject(fileName, 'location', location)
+}
+
+export function getReadTime (fileName) {
+    return getBookObject(fileName, 'time')
+}
+
+export function saveReadTime (fileName, theme) {
+    setBookObject(fileName, 'time', theme)
+}
