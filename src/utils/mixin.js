@@ -15,6 +15,7 @@ export const ebookMixin = {
             'fileName',
             'fontFamilyVisible',
             'menuVisible',
+            'metadata',
             'progress',
             'settingVisible',
             'section'
@@ -34,6 +35,7 @@ export const ebookMixin = {
             'setFontFamilyVisible',
             'setFileName',
             'setMenuVisible',
+            'setMetadata',
             'setProgress',
             'setSettingVisible',
             'setSection'

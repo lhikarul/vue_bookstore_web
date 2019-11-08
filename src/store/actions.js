@@ -17,6 +17,9 @@ const actions = {
     setMenuVisible: ({commit}, menuVisible) => {
         return commit('SET_MENU_VISIBLE', menuVisible);
     },
+    setMetadata: ({commit}, metadata) => {
+        return commit('SET_METADATA', metadata);
+    },
     setSettingVisible: ({commit}, settingVisible) => {
         return commit('SET_SETTING_VISIBLE', settingVisible);
     },

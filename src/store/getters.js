@@ -8,6 +8,7 @@ const book = {
     fileName: state => state.book.fileName,
     fontFamilyVisible: state => state.book.fontFamilyVisible,
     menuVisible: state => state.book.menuVisible,
+    metadata: state => state.book.metadata,
     progress: state => state.book.progress,
     settingVisible: state => state.book.settingVisible,
     section: state => state.book.section

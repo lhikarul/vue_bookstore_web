@@ -26,6 +26,7 @@ export default {
 
             this.initRendition();
             this.initGesture();
+            this.parseBook();
 
             this.book.ready
             .then(() => {
@@ -87,15 +88,6 @@ export default {
                 method: 'default'
             })
 
-            // this.rendition.display().then(() => {
-
-            //     this.initFontSize();
-            //     this.initFontFamily();
-            //     this.initTheme();
-            //     this.initGlobalStyle();
-            //     this.refreshLocation();
-
-            // })
             const location = getLocation(this.fileName);
             this.display(location, () => {
                 this.initFontSize();
@@ -136,6 +128,16 @@ export default {
                 })
                 this.hideTitleAndMenu()
             }
+        },
+        parseBook () {
+            this.book.loaded.cover.then(cover => {
+                this.book.archive.createUrl(cover).then(url => {
+                    this.setCover(url)
+                })
+            })
+            this.book.loaded.metadata.then(metadata => {
+                this.setMetadata(metadata);
+            })
         },
         prevPage () {
             if (this.rendition) {
