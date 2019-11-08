@@ -2,6 +2,7 @@ const book = {
     state: {
         bookAvailable: false,
         currentBook: null,
+        cover: null,
         defaultFontSize: 16,
         defaultFontFamily: 'Default',
         defaultTheme: 'Default',
@@ -18,6 +19,9 @@ const book = {
         },
         'SET_CURRENT_BOOK': (state,currentBook) => {
             state.currentBook = currentBook
+        },
+        'SET_COVER': (state,cover) => {
+            state.cover = cover;
         },
         'SET_FILENAME': (state,fileName) => {
             state.fileName = fileName

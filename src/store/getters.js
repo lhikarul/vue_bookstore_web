@@ -1,6 +1,7 @@
 const book = {
     bookAvailable: state => state.book.bookAvailable,
     currentBook: state => state.book.currentBook,
+    cover: state => state.book.cover,
     defaultFontSize: state => state.book.defaultFontSize,
     defaultFontFamily: state => state.book.defaultFontFamily,
     defaultTheme: state => state.book.defaultTheme,

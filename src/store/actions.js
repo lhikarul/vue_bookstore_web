@@ -2,6 +2,12 @@ const actions = {
     setBookAvailable: ({commit}, value) => {
         return commit('SET_BOOK_AVAILABLE', value)
     },
+    setCurrentBook: ({commit},currentBook) => {
+        return commit('SET_CURRENT_BOOK',currentBook)
+    },
+    setCover: ({commit}, cover) => {
+        return commit('SET_COVER', cover)
+    },
     setFileName: ({commit},fileName) => {
         return commit('SET_FILENAME', fileName)
     },
@@ -25,9 +31,6 @@ const actions = {
     },
     setDefaultTheme: ({commit},defaultTheme) => {
         return commit('SET_DEFAULT_THEME',defaultTheme)
-    },
-    setCurrentBook: ({commit},currentBook) => {
-        return commit('SET_CURRENT_BOOK',currentBook)
     },
     setProgress: ({commit}, progress) => {
         return commit('SET_PROGRESS', progress)

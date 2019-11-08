@@ -42,7 +42,6 @@
 
 <script>
 import {ebookMixin} from 'utils/mixin';
-import {getReadTime} from 'utils/localStorage';
 
 export default {
     name: 'EbookSettingProgress',
@@ -57,17 +56,6 @@ export default {
         displayProgress () {
             const cfi = this.currentBook.locations.cfiFromPercentage(this.progress / 100);
             this.display(cfi);
-        },
-        getReadTimeText () {
-            return this.$t('book.haveRead').replace('$1', this.getReadTimeByMinute())
-        },
-        getReadTimeByMinute () {
-            const readTime = getReadTime(this.fileName);
-            if (!readTime) {
-                return 0;
-            }else {
-                return Math.ceil(readTime / 60);
-            }
         },
         nextSection () {
             if (this.section < this.currentBook.spine.length - 1 && this.bookAvailable) {

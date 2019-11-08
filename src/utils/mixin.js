@@ -1,6 +1,6 @@
 import {mapGetters,mapActions} from 'vuex';
 
-import {themeList,addCss, removeAllCss} from 'utils/book';
+import {themeList,addCss, removeAllCss, getReadTimeByMinute} from 'utils/book';
 import {saveLocation} from 'utils/localStorage';
 
 export const ebookMixin = {
@@ -8,6 +8,7 @@ export const ebookMixin = {
         ...mapGetters([
             'bookAvailable',
             'currentBook',
+            'cover',
             'defaultFontSize',
             'defaultFontFamily',
             'defaultTheme',
@@ -26,6 +27,7 @@ export const ebookMixin = {
         ...mapActions([
             'setBookAvailable',
             'setCurrentBook',
+            'setCover',
             'setDefaultFontSize',
             'setDefaultFontFamily',
             'setDefaultTheme',
@@ -49,9 +51,10 @@ export const ebookMixin = {
                 })
             }
         },
+        getReadTimeText () {
+            return this.$t('book.haveRead').replace('$1', getReadTimeByMinute())
+        },
         hideTitleAndMenu () {
-            // this.$store.dispatch('setMenuVisible', false);
-            console.log('hide')
             this.setMenuVisible(false);
             this.setSettingVisible(-1);
             this.setFontFamilyVisible(false);
@@ -84,6 +87,6 @@ export const ebookMixin = {
             this.setProgress(Math.floor(progress * 100));
             this.setSection(currentLocation.start.index);
             saveLocation(this.fileName,startCfi);
-        },
+        }
     }
 }
