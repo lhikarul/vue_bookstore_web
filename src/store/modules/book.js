@@ -10,6 +10,7 @@ const book = {
         menuVisible: false,
         progress: 0,
         settingVisible: -1, // -1:不顯示, 0:字形設置, 1:主題, 2:進度條, 3:目錄
+        section: 0
     },
     mutations: {
         'SET_BOOK_AVAILABLE': (state,value) => {
@@ -41,6 +42,9 @@ const book = {
         },
         'SET_PROGRESS': (state,progress) => {
             state.progress = progress;
+        },
+        'SET_SECTION': (state,section) => {
+            state.section = section;
         }
     }
 }

@@ -8,7 +8,8 @@ const book = {
     fontFamilyVisible: state => state.book.fontFamilyVisible,
     menuVisible: state => state.book.menuVisible,
     progress: state => state.book.progress,
-    settingVisible: state => state.book.settingVisible
+    settingVisible: state => state.book.settingVisible,
+    section: state => state.book.section
 }
 
 export default book;

@@ -15,6 +15,7 @@ export const ebookMixin = {
             'menuVisible',
             'progress',
             'settingVisible',
+            'section'
         ]),
         themeList () {
             return themeList(this);
@@ -32,6 +33,7 @@ export const ebookMixin = {
             'setMenuVisible',
             'setProgress',
             'setSettingVisible',
+            'setSection'
         ]),
         initGlobalStyle () {
             removeAllCss();

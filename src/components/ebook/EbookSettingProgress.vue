@@ -11,8 +11,8 @@
 
                 <div class="progress-wrapper">
 
-                    <div class="progress-icon-wrapper">
-                        <span class="icon-back" @click="prevSection()"></span>
+                    <div class="progress-icon-wrapper" @click="prevSection()">
+                        <span class="icon-back"></span>
                     </div>
 
                     <input class="progress" type="range" max="100" min="0" step="1"
@@ -23,8 +23,8 @@
                         ref="progress"
                     >
 
-                    <div class="progress-icon-wrapper">
-                        <span class="icon-forward" @click="nextSection()"></span>
+                    <div class="progress-icon-wrapper" @click="nextSection()">
+                        <span class="icon-forward"></span>
                     </div>
 
                 </div>
@@ -46,12 +46,22 @@ export default {
     name: 'EbookSettingProgress',
     mixins: [ebookMixin],
     methods: {
+        displaySection () {
+            const sectionInfo = this.currentBook.section(this.section);
+            if (sectionInfo && sectionInfo.href) {
+                this.currentBook.rendition.display(sectionInfo.href);
+            }
+        },
         displayProgress () {
             const cfi = this.currentBook.locations.cfiFromPercentage(this.progress / 100);
             this.currentBook.rendition.display(cfi);
         },
         nextSection () {
-
+            if (this.section < this.currentBook.spine.length - 1 && this.bookAvailable) {
+                this.setSection(this.section + 1).then(() => {
+                    this.displaySection();
+                })
+            }
         },
         onProgressChange(progress) {
             this.setProgress(progress).then(() => {
@@ -65,7 +75,11 @@ export default {
             })
         },
         prevSection () {
-
+            if (this.section > 0 && this.bookAvailable) {
+                this.setSection(this.section - 1).then(() => {
+                    this.displaySection();
+                })
+            }
         },
         updatePorgressBg () {
             this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`
