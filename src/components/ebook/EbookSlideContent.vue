@@ -17,7 +17,7 @@
               <div class="slide-contents-book-img-wrapper">
                   <img :src="cover" alt="" class="slide-contents-book-img">
               </div>
-              <div class="slide-contents-book-info-wrapper">
+              <div class="slide-contents-book-info-wrapper" v-if="metadata">
                   <div class="slide-contents-book-title">{{metadata.title}}</div>
                   <div class="slide-contents-book-author">{{metadata.creator}}</div>
               </div>
@@ -29,21 +29,45 @@
                   <div class="slide-contents-book-time">{{getReadTimeText()}}</div>
               </div>
           </div>
+          <scroll class="slide-contents-list" ref="scroll" :top="156" :bottom="48">
+              <div class="slide-contents-item" v-for="(item,index) in navigation" :key="index">
+                  <span class="slide-contents-item-label" @click="displayNavigation(item.href)" :class="{'selected': section === index}" :style="contentItemStyle(item)">{{item.label}}</span>
+                  <span class="slide-contents-item-page"></span>
+              </div>
+          </scroll>
       </div>
   </div>
 </template>
 
 <script>
 import {ebookMixin} from 'utils/mixin';
+import Scroll from 'components/common/Scroll';
+import {px2rem} from 'utils/utils';
+
 export default {
     name: 'EbookSlideContent',
     mixins: [ebookMixin],
+    components: {
+        Scroll
+    },
     data () {
         return {
             searchVisible: false
         }
     },
     methods: {
+        // 關閉目錄
+        displayNavigation(target) {
+            this.display(target, () => {
+                this.hideTitleAndMenu();
+            })
+        },
+        // 動態綁定 style 選中章節高亮
+        contentItemStyle (item) {
+            return {
+                marginLeft: `${px2rem(item.level) * 15}rem`
+            }
+        },
         hideSearchPage () {
             this.searchVisible = false;
         },
@@ -140,6 +164,24 @@ export default {
             .slide-contents-book-time {
                 font-size: px2rem(12);
                 margin-top: px2rem(5);
+            }
+        }
+    }
+    .slide-contents-list {
+        padding: 0 px2rem(15);
+        box-sizing: border-box;
+        .slide-contents-item {
+            display: flex;
+            box-sizing: border-box;
+            padding: px2rem(20) 0;
+            &-label {
+                flex: 1;
+                font-size: px2rem(14);
+                line-height: px2rem(16);
+                @include ellipsis;
+            }
+            &-page {
+
             }
         }
     }
