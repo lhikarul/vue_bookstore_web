@@ -9,6 +9,7 @@ const book = {
     fontFamilyVisible: state => state.book.fontFamilyVisible,
     menuVisible: state => state.book.menuVisible,
     metadata: state => state.book.metadata,
+    navigation: state => state.book.navigation,
     progress: state => state.book.progress,
     settingVisible: state => state.book.settingVisible,
     section: state => state.book.section

@@ -20,6 +20,9 @@ const actions = {
     setMetadata: ({commit}, metadata) => {
         return commit('SET_METADATA', metadata);
     },
+    setNavigation: ({commit}, nav) => {
+        return commit('SET_NAVIGATION', nav);
+    },
     setSettingVisible: ({commit}, settingVisible) => {
         return commit('SET_SETTING_VISIBLE', settingVisible);
     },

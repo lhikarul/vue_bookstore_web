@@ -16,6 +16,7 @@ export const ebookMixin = {
             'fontFamilyVisible',
             'menuVisible',
             'metadata',
+            'navigation',
             'progress',
             'settingVisible',
             'section'
@@ -36,6 +37,7 @@ export const ebookMixin = {
             'setFileName',
             'setMenuVisible',
             'setMetadata',
+            'setNavigation',
             'setProgress',
             'setSettingVisible',
             'setSection'
@@ -54,7 +56,7 @@ export const ebookMixin = {
             }
         },
         getReadTimeText () {
-            return this.$t('book.haveRead').replace('$1', getReadTimeByMinute())
+            return this.$t('book.haveRead').replace('$1', getReadTimeByMinute(this.fileName))
         },
         hideTitleAndMenu () {
             this.setMenuVisible(false);
