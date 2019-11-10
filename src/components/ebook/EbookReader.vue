@@ -30,12 +30,13 @@ export default {
 
             this.book.ready
             .then(() => {
-                return this.book.locations.generate(750 * (window.innerWidth / 375) * (getFontSize(this.fileName / 16)))
+                return this.book.locations.generate(750 * (window.innerWidth / 375) * (getFontSize(this.fileName) / 16));
             }).then(() => {
                 this.setBookAvailable(true);
                 this.refreshLocation();
             })
         },
+        // 字型大小設置
         initFontSize () {
             var fontSize = getFontSize(this.fileName);
 
@@ -46,6 +47,7 @@ export default {
                 this.setDefaultFontSize(fontSize);
             }
         },
+        // 字體樣式設置
         initFontFamily () {
             var font = getFontFamily(this.fileName);
 
@@ -56,12 +58,13 @@ export default {
                 this.setDefaultFontFamily(font);
             }
         },
+        // 螢幕左右滑動 => 切換頁數
         initGesture () {
             // 偵聽移動端滑動事件
             this.rendition.on('touchstart', event => {
 
                 this.touchStartX = event.changedTouches[0].clientX; // 紀錄滑動當下的 x 值
-                this.touchStartTime = event.timeStamp; // 紀錄滑動的下的時間點
+                this.touchStartTime = event.timeStamp; // 紀錄當下滑動的時間點
             })
 
             // 偵聽移動端滑動結束事件
@@ -81,6 +84,7 @@ export default {
             })
 
         },
+        // 渲染電子書
         initRendition () {
             this.rendition = this.book.renderTo('read',{
                 width: 375,
@@ -105,6 +109,7 @@ export default {
                 ]).then(() => {})
             })
         },
+        // 主題設置
         initTheme () {
 
             var defaultTheme = getTheme(this.fileName);
@@ -116,6 +121,7 @@ export default {
 
             this.setDefaultTheme(defaultTheme);
 
+            // 登記每一個 theme 主題
             this.themeList.forEach(theme => {
                 this.rendition.themes.register(theme.name, theme.style)
             })
@@ -129,15 +135,20 @@ export default {
                 this.hideTitleAndMenu()
             }
         },
+        // 獲得書籍資訊
         parseBook () {
             this.book.loaded.cover.then(cover => {
                 this.book.archive.createUrl(cover).then(url => {
                     this.setCover(url)
                 })
             })
+
+            // metadata => 書的相關資料, title,creator,publisher...
             this.book.loaded.metadata.then(metadata => {
                 this.setMetadata(metadata);
             })
+
+            // 目錄章節
             this.book.loaded.navigation.then(nav => {
                
                 const navItem = flatten(nav.toc);
@@ -173,9 +184,8 @@ export default {
     },
     mounted () {
         const fileName = this.$route.params.fileName.split('|').join('/');
-
+        // 獲取當前的書籍名稱
         this.setFileName(fileName).then(() => {
-
             this.initEpub()
         })
 

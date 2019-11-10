@@ -98,6 +98,7 @@ export function getReadTimeByMinute (fileName) {
     }
 }
 
+// 合併多層陣列
 export function flatten(array) {
     return [].concat(...array.map(item => {
         return [].concat(item, ...flatten(item.subitems))

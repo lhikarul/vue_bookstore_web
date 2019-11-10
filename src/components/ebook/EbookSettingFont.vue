@@ -47,6 +47,7 @@ export default {
             saveFontSize(this.fileName, fontSize);
             this.currentBook.rendition.themes.fontSize(fontSize);
         },
+        // 字體樣式選擇
         showFontFamilyPopup () {
             this.setFontFamilyVisible(true);
         }

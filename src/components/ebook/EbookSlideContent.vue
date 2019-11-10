@@ -56,7 +56,7 @@ export default {
         }
     },
     methods: {
-        // 關閉目錄
+        // 渲染章節、關閉目錄
         displayNavigation(target) {
             this.display(target, () => {
                 this.hideTitleAndMenu();

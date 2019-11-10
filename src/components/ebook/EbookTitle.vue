@@ -4,7 +4,7 @@
 
             <div class="title-wrapper" v-show="menuVisible">
                 <div class="left">
-                    <span class="icon-back" @click="back"></span>
+                    <span class="icon-back"></span>
                 </div>
                 <div class="right">
                     <div class="icon-wrapper">
@@ -27,12 +27,7 @@
 import {ebookMixin} from 'utils/mixin';
 export default {
     name: 'EbookTitle',
-    mixins: [ebookMixin],
-    methods: {
-        back () {
-
-        }
-    },
+    mixins: [ebookMixin]
 }
 </script>
 

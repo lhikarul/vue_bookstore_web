@@ -47,12 +47,14 @@ export default {
     name: 'EbookSettingProgress',
     mixins: [ebookMixin],
     methods: {
+        // 渲染章節
         displaySection () {
             const sectionInfo = this.currentBook.section(this.section);
             if (sectionInfo && sectionInfo.href) {
                 this.display(sectionInfo.href)
             }
         },
+        // 依據進度條渲染內容
         displayProgress () {
             const cfi = this.currentBook.locations.cfiFromPercentage(this.progress / 100);
             this.display(cfi);
@@ -64,12 +66,14 @@ export default {
                 })
             }
         },
+        // 移動進度條
         onProgressChange(progress) {
             this.setProgress(progress).then(() => {
                 this.displayProgress();
                 this.updatePorgressBg();
             })
         },
+        // 進度條百分比變動
         onProgressInput (progress) {
             this.setProgress(progress).then(() => {
                 this.updatePorgressBg();
@@ -82,18 +86,13 @@ export default {
                 })
             }
         },
+        // 更新進度條位置
         updatePorgressBg () {
             this.$refs.progress.style.backgroundSize = `${this.progress}% 100%`
         }
     },
     computed: {
         getSectionName () {
-            // if (this.section) {
-            //     const sectionInfo = this.currentBook.section(this.section);
-            //     if (sectionInfo && sectionInfo.href && this.currentBook && this.currentBook.navigation) {
-            //         return this.currentBook.navigation.get(sectionInfo.href).label;
-            //     }
-            // }
             return this.section ? this.navigation[this.section].label : '';
         }
     },
