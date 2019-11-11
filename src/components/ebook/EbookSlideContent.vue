@@ -9,7 +9,8 @@
                   <input type="text" class="slide-contents-search-input" 
                         :placeholder="$t('book.searchHint')"
                         v-model="searchText"
-                        @click="showSearchPage "
+                        @keyup.enter.exact="search()"
+                        @click="showSearchPage"
                         >
               </div>
               <div class="slide-contents-search-cancel" v-if="searchVisible" @click="hideSearchPage()">{{$t('book.cancel')}}</div>
@@ -32,12 +33,12 @@
           </div>
           <scroll class="slide-contents-list" :top="156" :bottom="48" v-show="!searchVisible">
               <div class="slide-contents-item" v-for="(item,index) in navigation" :key="index">
-                  <span class="slide-contents-item-label" @click="displayNavigation(item.href)" :class="{'selected': section === index}" :style="contentItemStyle(item)">{{item.label}}</span>
+                  <span class="slide-contents-item-label" @click="displayContent(item.href)" :class="{'selected': section === index}" :style="contentItemStyle(item)">{{item.label}}</span>
                   <span class="slide-contents-item-page"></span>
               </div>
           </scroll>
           <scroll class="slide-search-list" :top="66" :bottom="48" v-show="searchVisible">
-              <div class="slide-search-item" v-for="(item,index) in searchList" :key="index">{{item.excerpt}}</div>
+              <div class="slide-search-item" v-for="(item,index) in searchList" :key="index" v-html="item.excerpt" @click="displayContent(item.cfi,true)"></div>
           </scroll>
       </div>
   </div>
@@ -62,13 +63,17 @@ export default {
         }
     },
     methods: {
-        // 渲染章節、關閉目錄
-        displayNavigation(target) {
+        // 渲染章節、渲染搜尋 keyword 內容
+        displayContent(target,highlight) {
             this.display(target, () => {
                 this.hideTitleAndMenu();
+
+                if (highlight) {
+                    this.currentBook.rendition.annotations.highlight(target);
+                }
             })
         },
-        // 搜索方法
+        // epub api 搜索方法
         doSearch(q) {
             return Promise.all(
                 // section 的相關資訊
@@ -90,12 +95,20 @@ export default {
         },
         showSearchPage () {
             this.searchVisible = true;
+        },
+        // 電子書內容搜尋
+        search () {
+            if (this.searchText && this.searchText.length > 0) {
+                this.doSearch(this.searchText).then(list => {
+                    this.searchList = list
+                    this.searchList.map(item => {
+                        // highlight searched keyword
+                        item.excerpt = item.excerpt = item.excerpt.replace(this.searchText, `<span class="content-search-text">${this.searchText}</span>`)
+                        return item
+                    })
+                })
+            }
         }
-    },
-    mounted () {
-        this.doSearch('added').then(list => {
-            this.searchList = list
-        })
     }
 }
 </script>
