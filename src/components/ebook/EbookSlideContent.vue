@@ -8,12 +8,13 @@
                   </div>
                   <input type="text" class="slide-contents-search-input" 
                         :placeholder="$t('book.searchHint')"
+                        v-model="searchText"
                         @click="showSearchPage "
                         >
               </div>
               <div class="slide-contents-search-cancel" v-if="searchVisible" @click="hideSearchPage()">{{$t('book.cancel')}}</div>
           </div>
-          <div class="slide-contents-book-wrapper">
+          <div class="slide-contents-book-wrapper" v-show="!searchVisible">
               <div class="slide-contents-book-img-wrapper">
                   <img :src="cover" alt="" class="slide-contents-book-img">
               </div>
@@ -29,11 +30,14 @@
                   <div class="slide-contents-book-time">{{getReadTimeText()}}</div>
               </div>
           </div>
-          <scroll class="slide-contents-list" ref="scroll" :top="156" :bottom="48">
+          <scroll class="slide-contents-list" :top="156" :bottom="48" v-show="!searchVisible">
               <div class="slide-contents-item" v-for="(item,index) in navigation" :key="index">
                   <span class="slide-contents-item-label" @click="displayNavigation(item.href)" :class="{'selected': section === index}" :style="contentItemStyle(item)">{{item.label}}</span>
                   <span class="slide-contents-item-page"></span>
               </div>
+          </scroll>
+          <scroll class="slide-search-list" :top="66" :bottom="48" v-show="searchVisible">
+              <div class="slide-search-item" v-for="(item,index) in searchList" :key="index">{{item.excerpt}}</div>
           </scroll>
       </div>
   </div>
@@ -52,7 +56,9 @@ export default {
     },
     data () {
         return {
-            searchVisible: false
+            searchVisible: false,
+            searchList: null,
+            searchText: ''
         }
     },
     methods: {
@@ -62,6 +68,15 @@ export default {
                 this.hideTitleAndMenu();
             })
         },
+        // 搜索方法
+        doSearch(q) {
+            return Promise.all(
+                // section 的相關資訊
+                this.currentBook.spine.spineItems.map(section => section.load(this.currentBook.load.bind(this.currentBook))
+                .then(section.find.bind(section, q))
+                .finally(section.unload.bind(section)))
+            ).then(results => Promise.resolve([].concat.apply([], results)))
+        },
         // 動態綁定 style 選中章節高亮
         contentItemStyle (item) {
             return {
@@ -70,10 +85,17 @@ export default {
         },
         hideSearchPage () {
             this.searchVisible = false;
+            this.searchText = '';
+            this.searchList = null;
         },
         showSearchPage () {
             this.searchVisible = true;
         }
+    },
+    mounted () {
+        this.doSearch('added').then(list => {
+            this.searchList = list
+        })
     }
 }
 </script>
@@ -183,6 +205,17 @@ export default {
             &-page {
 
             }
+        }
+    }
+    .slide-search-list {
+        width: 100%;
+        padding: 0 px2rem(15);
+        box-sizing: border-box;
+        .slide-search-item {
+            font-size: px2rem(14);
+            line-height: px2rem(16);
+            padding: px2rem(20) 0;
+            box-sizing: border-box;
         }
     }
 }

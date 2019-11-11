@@ -23,7 +23,7 @@ export default {
 
             this.book = new Epub(url);
             this.setCurrentBook(this.book);
-
+            console.log('this.currentBook ',this.currentBook);
             this.initRendition();
             this.initGesture();
             this.parseBook();
