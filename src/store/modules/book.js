@@ -8,6 +8,7 @@ const book = {
         defaultTheme: 'Default',
         fileName: '',
         fontFamilyVisible: false,
+        isBookmark: null,
         menuVisible: false,
         metadata: null,
         navigation: null,
@@ -31,6 +32,9 @@ const book = {
         },
         'SET_FONT_FAMILY_VISIBLE': (state, fontFamilyVisible) => {
             state.fontFamilyVisible = fontFamilyVisible
+        },
+        'SET_BOOKMARK': (state,val) => {
+            state.isBookmark = val;
         },
         'SET_MENU_VISIBLE': (state,menuVisible) => {
             state.menuVisible = menuVisible

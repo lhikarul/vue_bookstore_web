@@ -14,6 +14,9 @@ const actions = {
     setFontFamilyVisible: ({commit},fontFamilyVisible) => {
         return commit('SET_FONT_FAMILY_VISIBLE',fontFamilyVisible)
     },
+    setBookmark: ({commit}, bookmark) => {
+        return commit('SET_BOOKMARK', bookmark);
+    },
     setMenuVisible: ({commit}, menuVisible) => {
         return commit('SET_MENU_VISIBLE', menuVisible);
     },

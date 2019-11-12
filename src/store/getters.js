@@ -7,6 +7,7 @@ const book = {
     defaultTheme: state => state.book.defaultTheme,
     fileName: state => state.book.fileName,
     fontFamilyVisible: state => state.book.fontFamilyVisible,
+    isBookmark: state => state.book.isBookmark,
     menuVisible: state => state.book.menuVisible,
     metadata: state => state.book.metadata,
     navigation: state => state.book.navigation,
