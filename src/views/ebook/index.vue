@@ -3,6 +3,7 @@
         <ebook-title></ebook-title>
         <ebook-reader></ebook-reader>
         <ebook-menu></ebook-menu>
+        <ebook-bookmark></ebook-bookmark>
     </div>
 </template>
 
@@ -12,6 +13,7 @@ import Epub from 'epubjs';
 import EbookReader from 'components/ebook/EbookReader';
 import EbookTitle from 'components//ebook/EbookTitle';
 import EbookMenu from 'components/ebook/EbookMenu';
+import EbookBookmark from 'components/ebook/EbookBookmark';
 
 import {ebookMixin} from '../../utils/mixin';
 import {getReadTime,saveReadTime} from 'utils/localStorage';
@@ -25,7 +27,8 @@ export default {
     components: {
         EbookTitle,
         EbookReader,
-        EbookMenu
+        EbookMenu,
+        EbookBookmark
     },
     methods: {
         move (v) {
@@ -52,12 +55,22 @@ export default {
         },
     },
     watch: {
+        // 處理書籤下拉
         offsetY(v) {
-            if (v > 0) {
-                this.move(v);
-            }else if (v === 0) {
-                this.restore();
+            // 顯示 menu && 電子書初始化，不能下拉
+            if (!this.menuVisible && this.bookAvailable) {
+                    if (v > 0) {
+                        this.move(v);
+                    }else if (v === 0) {
+                        this.restore();
+                    }
             }
+
+            // if (v > 0) {
+            //     this.move(v);
+            // }else if (v === 0) {
+            //     this.restore();
+            // }
         }
     },
     mounted () {
