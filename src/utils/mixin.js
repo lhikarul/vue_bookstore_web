@@ -17,6 +17,7 @@ export const ebookMixin = {
             'menuVisible',
             'metadata',
             'navigation',
+            'offsetY',
             'progress',
             'settingVisible',
             'section'
@@ -38,6 +39,7 @@ export const ebookMixin = {
             'setMenuVisible',
             'setMetadata',
             'setNavigation',
+            'setOffsetY',
             'setProgress',
             'setSettingVisible',
             'setSection'

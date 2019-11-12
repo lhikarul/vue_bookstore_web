@@ -23,6 +23,9 @@ const actions = {
     setNavigation: ({commit}, nav) => {
         return commit('SET_NAVIGATION', nav);
     },
+    setOffsetY: ({commit}, y) => {
+        return commit('SET_OFFSETY', y);
+    },
     setSettingVisible: ({commit}, settingVisible) => {
         return commit('SET_SETTING_VISIBLE', settingVisible);
     },

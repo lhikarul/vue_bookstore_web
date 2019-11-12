@@ -10,6 +10,7 @@ const book = {
     menuVisible: state => state.book.menuVisible,
     metadata: state => state.book.metadata,
     navigation: state => state.book.navigation,
+    offsetY: state => state.book.offsetY,
     progress: state => state.book.progress,
     settingVisible: state => state.book.settingVisible,
     section: state => state.book.section

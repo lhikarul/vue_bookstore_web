@@ -11,6 +11,7 @@ const book = {
         menuVisible: false,
         metadata: null,
         navigation: null,
+        offsetY: 0,
         progress: 0,
         settingVisible: -1, // -1:不顯示, 0:字形設置, 1:主題, 2:進度條, 3:目錄
         section: 0
@@ -51,6 +52,9 @@ const book = {
         },
         'SET_DEFAULT_THEME': (state,defaultTheme) => {
             state.defaultTheme = defaultTheme
+        },
+        'SET_OFFSETY': (state,y) => {
+            state.offsetY = y;
         },
         'SET_PROGRESS': (state,progress) => {
             state.progress = progress;
